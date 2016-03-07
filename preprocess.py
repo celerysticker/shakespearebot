@@ -9,19 +9,21 @@ def tokenize_lines(filename):
 	i = 0
 	with open(filename) as f:
 		for line in f.readlines():
-			if i == 0: # skip every 14th line
-				i += 1
+			line = line.strip()
+			try:
+				int(line)
+				i = 0 # reset line count
 				continue
+			except ValueError:
+				pass
 
 			if len(line) > 0:
-				line = line.strip()
 				tokens = nltk.word_tokenize(line)
 				all_tokens.append(tokens)
-
-			if i < line_count:
-				i += 1
-			else: # i == 14
-				i = 0
+			i += 1
 	return all_tokens
+
+def print_tokens(all_tokens):
+	print ""
 
 print tokenize_lines('shakespeare.txt')
