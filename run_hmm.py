@@ -5,12 +5,18 @@ Created on Wed Mar  9 11:16:37 2016
 @author: nancywen
 """
 import numpy as np
+import json 
 from preprocess import tokenize_lines
 from hmm import train_hmm
+
 
 def main():
     fname = 'data/shakespeare.txt'
     train_data, obs_dict = load_data(fname)
+    
+    #save dictionary to file
+    with open ('obs_dict.json', 'w') as fp:
+        json.dump(obs_dict, fp)
     
     # pick the number of hidden states
     num_states = 10

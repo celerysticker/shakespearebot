@@ -67,7 +67,9 @@ def M_step(train_data, num_states, num_obs, A, O, alphas, betas, c_array):
     
     # update the emission matrix
     for j in range(num_states):
+        print j
         for k in range(num_obs):
+            print k
             num_sum = 0
             den_sum = 0
             for l, obs in enumerate(train_data):
