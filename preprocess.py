@@ -1,4 +1,5 @@
 import nltk
+import numpy as np
 
 # Run this line the first time
 # nltk.download('punkt')
@@ -18,7 +19,7 @@ def tokenize_lines(filename):
 				pass
 
 			if len(line) > 0:
-				tokens = nltk.word_tokenize(line)
+				tokens = np.array(nltk.word_tokenize(line))
 				all_tokens.append(tokens)
 			i += 1
 	return all_tokens
@@ -26,4 +27,4 @@ def tokenize_lines(filename):
 def print_tokens(all_tokens):
 	print ""
 
-print tokenize_lines('shakespeare.txt')
+#print tokenize_lines('data/shakespeare.txt')
