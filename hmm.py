@@ -21,6 +21,19 @@ def main():
     A, O = train_hmm(train_data, num_states, num_obs, A, O)
     print "..........Complete training HMM.........."
     
+    A_str = latex_matrix(A) # write hmm to file
+    O_str = latex_matrix(O)
+    with open('h1.txt', 'w') as f:
+        f.write(A_str)
+        f.write(O_str)
+    
+def latex_matrix(matrix):
+    matrix_str = ''
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            matrix_str += str("{0:.3f}".format(matrix[i][j])) + '\t'
+        matrix_str = matrix_str[:-2] + '\n'
+    return matrix_str
 
 def load_data(fname):
     # tokenize data with preprocess
@@ -134,7 +147,8 @@ def EM_step(train_data, num_states, num_obs, A, O):
                 epsilon[length][j][i] = alpha[length][i] * A[i][j] * beta[length + 1][j] * \
                                         O[j][obs[length + 1]] / sum(alpha[len_ - 1])
                 
-    # M-STEP
+    # M-STEP: numerator and denominator sum over every training sequence
+    # in the training set
                 
     A = np.zeros(shape=(num_states, num_states))
     

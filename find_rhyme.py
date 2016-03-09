@@ -54,6 +54,6 @@ def make_rhyme_dictionary(filename):
                 rhyme_dict[word] = [last_words[i - 2]]
             else:
                 rhyme_dict[word].append(last_words[i - 2])
-    return last_words
+    return rhyme_dict
   
 rhyme_dict = make_rhyme_dictionary('data/shakespeare_reduced.txt')
