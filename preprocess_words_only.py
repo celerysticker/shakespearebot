@@ -10,7 +10,7 @@ from nltk.tokenize import RegexpTokenizer
 # nltk.download('punkt')
 
 def tokenize_lines_words_only(filename):
-""" Creates a list of tokens out of the poems that only contains
+    """ Creates a list of tokens out of the poems that only contains
     the words (no punctuation) """
     all_tokens = []
     line_count = 14
@@ -32,4 +32,4 @@ def tokenize_lines_words_only(filename):
     return all_tokens
     
     
-print tokenize_lines_words_only('data/shakespeare.txt')
+#tokenize_lines_words_only('data/shakespeare_reduced.txt')
