@@ -1,67 +1,6 @@
 import numpy as np
-from preprocess import tokenize_lines
 
 # Reference: https://en.wikipedia.org/wiki/Baum%E2%80%93Welch_algorithm
-
-def main():
-    fname = 'data/shakespeare.txt'
-    train_data, obs_dict = load_data(fname)
-    
-    # pick the number of hidden states
-    num_states = 10
-    num_obs = len(obs_dict)
-    
-    # initialize the A, O matrices
-    A, O = init(num_states, num_obs) 
-    print "Dimensions of A: {0}".format(A.shape)
-    print "Dimension of O: {0}".format(O.shape)
-    
-    # train hmm
-    print "..........Begin training HMM.........."
-    A, O = train_hmm(train_data, num_states, num_obs, A, O)
-    print "..........Complete training HMM.........."
-    
-    A_str = latex_matrix(A) # write hmm to file
-    O_str = latex_matrix(O)
-    with open('hmm.txt', 'w') as f:
-        f.write(A_str)
-        f.write(O_str)
-    
-def latex_matrix(matrix):
-    matrix_str = ''
-    for i in range(len(matrix)):
-        for j in range(len(matrix[0])):
-            matrix_str += str("{0:.3f}".format(matrix[i][j])) + '\t'
-        matrix_str = matrix_str[:-2] + '\n'
-    return matrix_str
-
-def load_data(fname):
-    # tokenize data with preprocess
-    data = tokenize_lines(fname)
-
-    num_examples = len(data) # 2155 Shakespeare sonnets
-    print "Num of training examples: " + str(num_examples)
-    
-    obs_dict = dict() #initialize the dictionary of observed words
-    num_obs = 0
-    train_data = []
-    
-    # Make a dictionary of all observed tokens (e.g. words, punctuation)
-    for i in range(num_examples):
-        line = data[i]
-        obs_line = []
-        for j in range(len(line)):
-            word = line[j]
-            if word not in obs_dict:
-                obs_dict[word] = num_obs
-                num_obs += 1
-            obs_line.append(obs_dict[word])
-        train_data.append(obs_line)
-    
-    print "Num of distinct obs tokens: " + str(num_obs)
-    
-    return train_data, obs_dict
-    
     
 def train_hmm(train_data, num_states, num_obs, A, O):
     """Takes data as input and returns a HMM modeled (A, O matrices)
@@ -69,33 +8,27 @@ def train_hmm(train_data, num_states, num_obs, A, O):
     converged = False
     
     iteration = 0
-    while iteration is not 10: # fixed number of iterations to be 10
+    while iteration is not 1: # fixed number of iterations to be 10
         print "Iteration " + str(iteration)
+        A_old, O_old = A, O
+        
         A, O = EM_step(train_data, num_states, num_obs, A, O)
+        
+        # check convergence condition
+        A_norm = np.linalg.norm(A - A_old, 'fro')
+        O_norm = np.linalg.norm(O - O_old, 'fro')
+        print A_norm
+        print O_norm
         iteration += 1
     return A, O
 
-def init(num_states, num_obs):
-    """Returns randomly initialized A and O matrices"""
-    A = np.random.uniform(size=(num_states, num_states))
-    for row in A:
-        row /= np.sum(row)
-        
-    O = np.random.uniform(size=(num_states, num_obs))
-    for row in O:
-        row /= np.sum(row)
-       
-    # make sure that there are no zero values in the initialization
-    if np.count_nonzero(A) != num_states**2 or np.count_nonzero(O) != num_states * num_obs:
-        print "Initialize again"
-        init(num_states, num_obs)
-    else:
-        return A, O
+def forward():
+    return alpha
     
-
+def bac
+    
 def EM_step(train_data, num_states, num_obs, A, O):
     """Runs Forward-Backward algorithm to compute marginal probabilities """
-    num_train = len(train_data)
         
     obs = train_data[0] # train on the first line
     len_ = len(obs)
@@ -176,5 +109,3 @@ def EM_step(train_data, num_states, num_obs, A, O):
        
     return A, O
 
-if __name__ == "__main__":
-    main()
