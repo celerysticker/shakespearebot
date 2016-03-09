@@ -1,5 +1,4 @@
 import nltk
-import numpy as np
 
 # Run this line the first time
 # nltk.download('punkt')
@@ -19,7 +18,7 @@ def tokenize_lines(filename):
 				pass
 
 			if len(line) > 0:
-				tokens = np.array(nltk.word_tokenize(line))
+				tokens = nltk.word_tokenize(line)
 				all_tokens.append(tokens)
 			i += 1
 	return all_tokens
