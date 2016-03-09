@@ -6,7 +6,7 @@ Created on Wed Mar  9 11:16:37 2016
 """
 import numpy as np
 from preprocess import tokenize_lines
-from hmm import train_hmm
+from hmm import hmm
 
 def main():
     fname = 'data/shakespeare.txt'
@@ -23,7 +23,7 @@ def main():
     
     # train hmm
     print "..........Begin training HMM.........."
-    A, O = train_hmm(train_data, num_states, num_obs, A, O)
+    A, O = hmm(train_data, num_states, num_obs, A, O)
     print "..........Complete training HMM.........."
     
     A_str = print_matrix(A) # write hmm to file
