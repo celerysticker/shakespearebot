@@ -23,7 +23,7 @@ def main():
     
     A_str = latex_matrix(A) # write hmm to file
     O_str = latex_matrix(O)
-    with open('h1.txt', 'w') as f:
+    with open('hmm.txt', 'w') as f:
         f.write(A_str)
         f.write(O_str)
     
