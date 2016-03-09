@@ -26,4 +26,4 @@ def tokenize_lines(filename):
 def print_tokens(all_tokens):
 	print ""
 
-#print tokenize_lines('data/shakespeare.txt')
+# print tokenize_lines('data/shakespeare.txt')
