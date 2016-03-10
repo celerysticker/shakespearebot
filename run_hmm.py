@@ -14,9 +14,7 @@ def main():
     fname = 'data/shakespeare.txt'
     train_data, obs_dict = load_data(fname)
     
-    #save dictionary to file
-    with open ('obs_dict.json', 'w') as fp:
-        json.dump(obs_dict, fp)
+    make_dict(obs_dict)
     
     # pick the number of hidden states
     num_states = 10
@@ -37,6 +35,20 @@ def main():
     with open('hmm.txt', 'w') as f:
         f.write(A_str)
         f.write(O_str)
+        
+def make_dict(obs_dict):
+    #save dictionary to file
+    with open ('obs_dict.json', 'w') as fp:
+        json.dump(obs_dict, fp)
+        
+    rev_obs_dict = dict()
+    for obs in obs_dict:
+        if obs_dict[obs] not in rev_obs_dict:
+            rev_obs_dict[obs_dict[obs]] = obs 
+        
+    #save dictionary to file
+    with open ('rev_obs_dict.json', 'w') as fp2:
+        json.dump(rev_obs_dict, fp2) 
         
 def load_data(fname):
     # tokenize data with preprocess
