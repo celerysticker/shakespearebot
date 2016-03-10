@@ -29,3 +29,10 @@ with open('obs_dict.json') as df:
 with open('rev_obs_dict.json') as df2:
     rev_obs_dict = json.load(df2)
     
+num_lines = 14
+words_per_line = 8
+
+for i in range(num_lines):
+    for j in range(words_per_line):
+        # choose hidden state
+        # choose 
