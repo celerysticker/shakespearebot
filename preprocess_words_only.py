@@ -30,6 +30,13 @@ def tokenize_lines_words_only(filename):
                 all_tokens.append(tokens)
             i += 1
     return all_tokens
+
+def get_words_only_str(line):
+    tokenizer = RegexpTokenizer(r'\w+')
+    line = line.strip()
+    if len(line) > 0:
+        tokens = tokenizer.tokenize(line)
+    return tokens
     
-    
-#tokenize_lines_words_only('data/shakespeare_reduced.txt')
+# if __name__ == "__main__":   
+#     tokenize_lines_words_only('data/shakespeare_reduced.txt')
