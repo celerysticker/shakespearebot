@@ -51,6 +51,6 @@ first_line = generate_line(first_len)
 second_line = generate_line(second_len)
 third_line = generate_line(third_len)
 
-print first_line
-print second_line
-print third_line
+print '(5) ' + first_line
+print '(7) ' + second_line
+print '(5) ' + third_line
