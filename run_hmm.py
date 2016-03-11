@@ -6,7 +6,7 @@ Created on Wed Mar  9 11:16:37 2016
 """
 import numpy as np
 import json 
-from preprocess import tokenize_lines
+from preprocess_words_only import tokenize_lines_words_only
 from hmm import train_hmm
 
 
@@ -27,7 +27,7 @@ def main():
     
     # train hmm
     print "..........Begin training HMM.........."
-    A, O = train_hmm(train_data, num_states, num_obs, A, O)
+    #A, O = train_hmm(train_data, num_states, num_obs, A, O)
     print "..........Complete training HMM.........."
     
     A_str = print_matrix(A) # write hmm to file
@@ -52,7 +52,7 @@ def make_dict(obs_dict):
         
 def load_data(fname):
     # tokenize data with preprocess
-    data = tokenize_lines(fname)
+    data = tokenize_lines_words_only(fname)
 
     num_examples = len(data) # 2155 Shakespeare sonnets
     print "Num of training examples: " + str(num_examples)

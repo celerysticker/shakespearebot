@@ -19,6 +19,7 @@ def tokenize_lines_words_only(filename):
     with open(filename) as f:
         for line in f.readlines():
             line = line.strip()
+            line = line.lower()
             try:
                 int(line)
                 i = 0
@@ -34,6 +35,7 @@ def tokenize_lines_words_only(filename):
 def get_words_only_str(line):
     tokenizer = RegexpTokenizer(r'\w+')
     line = line.strip()
+    line = line.lower()
     if len(line) > 0:
         tokens = tokenizer.tokenize(line)
     return tokens
