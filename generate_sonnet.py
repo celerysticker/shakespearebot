@@ -8,6 +8,9 @@ Created on Fri Mar 11 00:17:31 2016
 
 from utils import nsyl
 from utils import get_syllables_str
+from ngram_model import generate
+from ngram_model import build_model
+from ngram_model import load_data
 import random 
 
 import json 
@@ -41,12 +44,13 @@ def generate_line_backwards(line_len, last_word):
     line.reverse()
     return line
     
-def generate_line(line_len, first_word):
+def generate_line(line_len):
     '''
-    TODO: Given the first word of a line and the number of syllables in a line
+    TODO: Given the number of syllables in a line, uses ngram to generate a line
     Return a line of the sonnet
     '''
-    pass
+    line = generate(model, n, line_len)
+    return line
         
 def pick_last_word(line_index, sonnet):
     '''
@@ -122,10 +126,19 @@ def make_sonnet(rhyming):
     else:
         for i in range(num_lines):
             # randomly choose a last word
-            first_word = pick_first_word(i, sonnet)
-            curr_line = generate_line(line_len, first_word)
+            #first_word = pick_first_word(i, sonnet)
+            curr_line = generate_line(line_len)
             sonnet.append(curr_line)  
     return sonnet
 
-sonnet = make_sonnet(True)     
+#sonnet = make_sonnet(True) # rhyming, backwards  
+#print_sonnet(sonnet)
+
+fname = 'data/shakespeare.txt'
+n = 3  # increase order of the ngram to generate closely to the text (no higher than 4)
+data, obs_dict = load_data(fname)
+model = build_model(data, n)
+
+sonnet = make_sonnet(False) # not rhyming, forwards    
 print_sonnet(sonnet)
+    
