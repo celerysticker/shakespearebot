@@ -22,7 +22,7 @@ with open('rev_obs_dict.json') as df2:
 with open('rhyme_dict.json') as df3:
     rhyme_dict = json.load(df3)    
     
-def generate_line(line_len, last_word):
+def generate_line_backwards(line_len, last_word):
     '''
     Given the last word of a line and the number of syllables in a line
     Return a line of the sonnet
@@ -40,6 +40,13 @@ def generate_line(line_len, last_word):
             num_syllables += candidate_len
     line.reverse()
     return line
+    
+def generate_line(line_len, first_word):
+    '''
+    TODO: Given the first word of a line and the number of syllables in a line
+    Return a line of the sonnet
+    '''
+    pass
         
 def pick_last_word(line_index, sonnet):
     '''
@@ -62,6 +69,13 @@ def pick_last_word(line_index, sonnet):
          
     #print last_word
     return last_word
+    
+def pick_first_word(line_index, sonnet):
+    '''
+    TODO: Given the line index and the poem generated so far
+    Return the first word of the next line
+    '''
+    pass
     
 def print_sonnet(sonnet):
     '''
@@ -88,18 +102,30 @@ def sonnet_to_file(sonnet):
     """
     pass
 
-sonnet = []   
-num_words = len(obs_dict) # 3433
-num_rhyme_words = len(rhyme_dict) # 1011
-num_lines = 14
-line_len = 10
-
-for i in range(num_lines):
-    # randomly choose a last word
-    last_word = pick_last_word(i, sonnet)
-            
-    curr_line = generate_line(line_len, last_word)
-    sonnet.append(curr_line)
-    #print curr_line
+def make_sonnet(rhyming):
+    '''
+    Given whether it's rhyming, generates a sonnet
+    '''
+    sonnet = []   
+    num_words = len(obs_dict) # 3433
+    num_rhyme_words = len(rhyme_dict) # 1011
+    num_lines = 14
+    line_len = 10
     
+    if rhyming:
+        for i in range(num_lines):
+            # randomly choose a last word
+            last_word = pick_last_word(i, sonnet)
+                    
+            curr_line = generate_line_backwards(line_len, last_word)
+            sonnet.append(curr_line)
+    else:
+        for i in range(num_lines):
+            # randomly choose a last word
+            first_word = pick_first_word(i, sonnet)
+            curr_line = generate_line(line_len, first_word)
+            sonnet.append(curr_line)  
+    return sonnet
+
+sonnet = make_sonnet(True)     
 print_sonnet(sonnet)
