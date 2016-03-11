@@ -22,7 +22,7 @@ F - 11
 G - 12
 G - 13
 '''
-
+import json 
 
 from preprocess_words_only import tokenize_lines_words_only
 
@@ -57,3 +57,5 @@ def make_rhyme_dictionary(filename):
     return rhyme_dict
   
 rhyme_dict = make_rhyme_dictionary('data/shakespeare_reduced.txt')
+with open ('rhyme_dict.json', 'w') as fp:
+    json.dump(rhyme_dict, fp)
