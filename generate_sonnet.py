@@ -135,7 +135,10 @@ def make_sonnet(rhyming):
 #print_sonnet(sonnet)
 
 fname = 'data/shakespeare.txt'
-n = 3  # increase order of the ngram to generate closely to the text (no higher than 4)
+
+n = 1  # increase order of the ngram to generate closely to the text (no higher than 4)
+# n = 3 will start to copy entire lines from different poems
+
 data, obs_dict = load_data(fname)
 model = build_model(data, n)
 

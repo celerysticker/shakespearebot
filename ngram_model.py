@@ -41,6 +41,11 @@ def generate(model, n,  line_len, seed=None, max_iterations=100):
     current = tuple(seed)
     counter = 0
     num_syllables = 0
+    for word in line:
+        if nsyl(word) is -1: # hacky workaround for words not in dictionary
+            num_syllables += 1
+        else:
+            num_syllables += nsyl(word)
     while num_syllables < line_len: # reset
         if counter > max_iterations:
             print "reset counter"
@@ -49,23 +54,37 @@ def generate(model, n,  line_len, seed=None, max_iterations=100):
             current = tuple(seed)
             counter = 0
             num_syllables = 0
+            for word in line:
+                if nsyl(word) is -1: # hacky workaround for words not in dictionary
+                    num_syllables += 1
+                else:
+                    num_syllables += nsyl(word)
         if current in model:
             possible_next_words= model[current]
             next_word = random.choice(possible_next_words)
             if nsyl(next_word) is -1:
-                num_syllables += 1
+                next_syllable = 1
             else:
-                num_syllables += nsyl(next_word)
-
-            line.append(next_word)
-            print line
-            current = tuple(line[-n:]) # returns last n words
+                next_syllable = nsyl(next_word)
+            
+            if num_syllables + next_syllable <= line_len: 
+                num_syllables += next_syllable
+                line.append(next_word)
+                print line
+                print num_syllables
+                current = tuple(line[-n:]) # returns last n words
+                
         else:
             seed = random.choice(model.keys())
             line = list(seed)
             current = tuple(seed)
             counter = 0 
             num_syllables = 0
+            for word in line:
+                if nsyl(word) is -1: # hacky workaround for words not in dictionary
+                    num_syllables += 1
+                else:
+                    num_syllables += nsyl(word)
                 
     return line
         
