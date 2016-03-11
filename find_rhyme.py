@@ -27,6 +27,9 @@ import json
 from preprocess_words_only import tokenize_lines_words_only
 
 def make_rhyme_dictionary(filename):
+    ''' Given a filename, build a rhyming dictionary from the last
+        word of every line. 
+    '''
     rhyme_dict = dict()
     last_words = []
     tokens = tokenize_lines_words_only(filename)
