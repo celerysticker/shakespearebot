@@ -22,14 +22,27 @@ def main():
         matrix = f.readlines()[0]
         O = eval(matrix)
     
-    max_iter = 10 # number of hidden states to  generate   
-    state_path = find_state_path(max_iter, A, initial_state_probs)
+    max_iter = 10 # number of hidden states to  generate 
+    first_word = "love"
+    first_state = find_state_of_word(first_word, O)
+    
+    state_path = find_state_path(first_state, max_iter, A, initial_state_probs)
     emissions = get_emissions(state_path, O)
     
     print state_path
     prettyprint(emissions)
+    
+def find_state_of_word(word, OM):
+    '''Given a word, find highest probability state of a word'''
+    max_state = 0
+    max_prob = 0
+    for i in range(len(OM)):
+        if OM[i][word] > max_prob:
+            max_state = i
+            max_prob = OM[i][word]
+    return max_state
 
-def find_state_path(max_iter, A, initial_state_probs):   
+def find_state_path(first_state, max_iter, A, initial_state_probs):   
     n = len(A)
     current_state = random.randint(0,9)
     state_path = [current_state]
