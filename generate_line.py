@@ -29,16 +29,17 @@ def main():
     print state_path
     prettyprint(emissions)
 
-def find_state_path(max_iter, A, initial_state_probs):    
+def find_state_path(max_iter, A, initial_state_probs):   
+    n = len(A)
     current_state = random.randint(0,9)
     state_path = [current_state]
     
-    
     for i in range(max_iter - 1):
         current_probs = A[current_state]
-        best_state = np.argmax(current_probs)
-        state_path.append(best_state)
-        current_state = best_state
+        #best_state = np.argmax(current_probs)
+        next_state = random_pick(range(n), current_probs)
+        state_path.append(next_state)
+        current_state = next_state
 
     return state_path
 
@@ -47,13 +48,7 @@ def get_emissions(state_seq, OM):
     emission = []
     for state in state_seq:
         # OM is a list of dictionaries
-        # find max
-        max_prob = 0
-        max_obs = None
-        for key in OM[state]:
-            if OM[state][key] > max_prob:
-                max_prob = OM[state][key]
-                max_obs = key
+        max_obs = random_pick(OM[state].keys(), OM[state].values())
         emission.append(max_obs)
     return emission
 
