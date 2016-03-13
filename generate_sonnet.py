@@ -7,10 +7,10 @@ Created on Fri Mar 11 00:17:31 2016
 """
 
 from utils import nsyl
-from utils import get_syllables_str
 from ngram_model import generate
 from ngram_model import build_model
 from ngram_model import load_data
+from generate_line import main 
 import random 
 
 import json 
@@ -106,42 +106,22 @@ def sonnet_to_file(sonnet):
     """
     pass
 
-def make_sonnet(rhyming):
+def make_sonnet():
     '''
-    Given whether it's rhyming, generates a sonnet
+    Generates a sonnet
     '''
     sonnet = []   
-    num_words = len(obs_dict) # 3433
-    num_rhyme_words = len(rhyme_dict) # 1011
     num_lines = 14
-    line_len = 10
+    line_len = 10 # number of syllables 
     
-    if rhyming:
-        for i in range(num_lines):
-            # randomly choose a last word
-            last_word = pick_last_word(i, sonnet)
+    for i in range(num_lines):
+        # randomly choose a last word
+        last_word = pick_last_word(i, sonnet)
                     
-            curr_line = generate_line_backwards(line_len, last_word)
-            sonnet.append(curr_line)
-    else:
-        for i in range(num_lines):
-            # randomly choose a last word
-            #first_word = pick_first_word(i, sonnet)
-            curr_line = generate_line(line_len)
-            sonnet.append(curr_line)  
+        curr_line = generate_line_backwards(line_len, last_word)
+        sonnet.append(curr_line)
     return sonnet
 
-#sonnet = make_sonnet(True) # rhyming, backwards  
-#print_sonnet(sonnet)
-
-fname = 'data/shakespeare.txt'
-
-n = 1  # increase order of the ngram to generate closely to the text (no higher than 4)
-# n = 3 will start to copy entire lines from different poems
-
-data, obs_dict = load_data(fname)
-model = build_model(data, n)
-
-sonnet = make_sonnet(False) # not rhyming, forwards    
+sonnet = make_sonnet() # true
 print_sonnet(sonnet)
     
