@@ -44,6 +44,12 @@ obs = p.get_unique_obs(sequences)
 trainer = nltk.tag.hmm.HiddenMarkovModelTrainer(states, obs)
 hmm = trainer.train_unsupervised(sequences_tag, max_iterations=100)
 
+# transition matrix
+print_A(hmm)
+
+# words in each state
+tag_words(hmm)
+
 # # not sure what this is...
 # print hmm._outputs[1]._samples
 
