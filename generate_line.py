@@ -7,9 +7,14 @@ Created on Sun Mar 13 12:53:19 2016
 import os
 import random
 import numpy as np
+from utils import nsyl
 
 
-def main():    
+def main():
+    for i in range(14):
+        make_line()
+
+def make_line():    
     with open('ten_init.txt') as f:
         matrix = f.readlines()[0]
         initial_state_probs = eval(matrix)
@@ -23,13 +28,13 @@ def main():
         O = eval(matrix)
     
     max_iter = 10 # number of hidden states to  generate 
-    first_word = "love"
-    first_state = find_state_of_word(first_word, O)
+    #first_word = "love"
+    #first_word = 
+    #first_state = find_state_of_word(first_word, O)
     
-    state_path = find_state_path(first_state, max_iter, A, initial_state_probs)
+    state_path = find_state_path(max_iter, A, initial_state_probs, initial_state_probs)
     emissions = get_emissions(state_path, O)
-    
-    print state_path
+    #print state_path
     prettyprint(emissions)
     
 def find_state_of_word(word, OM):
@@ -42,9 +47,10 @@ def find_state_of_word(word, OM):
             max_prob = OM[i][word]
     return max_state
 
-def find_state_path(first_state, max_iter, A, initial_state_probs):   
+def find_state_path(max_iter, A, initial_state_probs, init_state):   
     n = len(A)
-    current_state = random.randint(0,9)
+    #current_state = random.randint(0,9)
+    current_state = random_pick(init_state.keys(), init_state.values())
     state_path = [current_state]
     
     for i in range(max_iter - 1):
@@ -59,7 +65,8 @@ def find_state_path(first_state, max_iter, A, initial_state_probs):
 def get_emissions(state_seq, OM):
     ''' Given state sequence, return sequence of emissions '''
     emission = []
-    for state in state_seq:
+    num_syllables = 0
+    for e, state in enumerate(state_seq):
         # OM is a list of dictionaries
         max_obs = random_pick(OM[state].keys(), OM[state].values())
         emission.append(max_obs)
