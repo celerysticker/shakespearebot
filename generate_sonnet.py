@@ -10,7 +10,7 @@ from utils import nsyl
 from ngram_model import generate
 from ngram_model import build_model
 from ngram_model import load_data
-from generate_line import main 
+from generate_line import main
 import random 
 
 import json 
@@ -115,10 +115,9 @@ def make_sonnet():
     line_len = 10 # number of syllables 
     
     for i in range(num_lines):
-        # randomly choose a last word
         last_word = pick_last_word(i, sonnet)
-                    
-        curr_line = generate_line_backwards(line_len, last_word)
+        curr_line = main(last_word)
+        curr_line.reverse()
         sonnet.append(curr_line)
     return sonnet
 
