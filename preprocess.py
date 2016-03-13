@@ -23,7 +23,23 @@ def tokenize_lines(filename):
 			i += 1
 	return all_tokens
 
-def print_tokens(all_tokens):
-	print ""
+def format_tokens(list_tokens):
+	"""Format tokens for nltk.hmm.tag"""
+	all_tokens = []
+	for sequence in list_tokens:
+		token_seq = []
+		for token in sequence:
+			token_seq.append((token, ''))
+		all_tokens.append(token_seq)
+	return all_tokens
+
+def get_unique_obs(list_tokens):
+	all_tokens = []
+	for sequence in list_tokens:
+		for token in sequence:
+			all_tokens.append(token)
+	return list(set(all_tokens))
+
 
 tokens = tokenize_lines('data/shakespeare.txt')
+# print format_tokens(tokens)
